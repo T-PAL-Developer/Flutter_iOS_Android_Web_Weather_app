@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:weather_app/utilities/constants.dart';
 import 'package:weather_app/services/weather_model.dart';
 
+import 'city_screen.dart';
+
 class LocationScreen extends StatefulWidget {
   LocationScreen({this.weatherDataGPS});
   final weatherDataGPS;
@@ -25,12 +27,12 @@ class _LocationScreenState extends State<LocationScreen> {
         weatherIcon = '🤭';
         weatherComment = 'Unable to get weather, check GPS permission';
         return;
-      } else {
-        temperature = 0;
-        city = '';
-        weatherIcon = '🤭';
-        weatherComment = 'Unable to get weather, check network connection';
       }
+      temperature = weatherData['main']['temp'];
+      city = weatherData['name'];
+      int condition = weatherData['weather'][0]['id'];
+      weatherIcon = weather.getWeatherIcon(condition);
+      weatherComment = '${weather.getMessage(temperature)} in $city';
     });
   }
 
@@ -63,6 +65,9 @@ class _LocationScreenState extends State<LocationScreen> {
                 children: <Widget>[
                   TextButton(
                     onPressed: () async {
+                      setState(() {
+                        weatherComment = 'Checking GPS location';
+                      });
                       var weatherData = await weather.getGPSLocationWeather();
                       updateUI(weatherData);
                     },
@@ -73,7 +78,12 @@ class _LocationScreenState extends State<LocationScreen> {
                     ),
                   ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return CityScreen();
+                      }));
+                    },
                     child: Icon(
                       Icons.location_city,
                       size: 50.0,
@@ -100,7 +110,7 @@ class _LocationScreenState extends State<LocationScreen> {
               Padding(
                 padding: EdgeInsets.only(right: 15.0),
                 child: Text(
-                  "$weatherComment in $city",
+                  '$weatherComment',
                   textAlign: TextAlign.right,
                   style: kMessageTextStyle,
                 ),
