@@ -25,13 +25,6 @@ class _LocationScreenState extends State<LocationScreen> {
         weatherIcon = '🤭';
         weatherComment = 'Unable to get weather, check GPS permission';
         return;
-      }
-      if (weather.statusCode == 200) {
-        temperature = weatherData['main']['temp'];
-        city = weatherData['name'];
-        int condition = weatherData['weather'][0]['id'];
-        weatherIcon = weather.getWeatherIcon(condition);
-        weatherComment = '${weather.getMessage(temperature)} in ';
       } else {
         temperature = 0;
         city = '';

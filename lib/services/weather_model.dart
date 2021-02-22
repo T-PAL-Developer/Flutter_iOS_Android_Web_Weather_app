@@ -7,8 +7,6 @@ const String apiLanguage = 'en';
 const String units = 'metric';
 
 class WeatherModel {
-  int statusCode;
-
   Future<dynamic> getGPSLocationWeather() async {
     Location location = Location();
     await location.getCurrentLocation();
@@ -18,7 +16,6 @@ class WeatherModel {
     NetworkHelper networkHelper = NetworkHelper(url);
 
     var weatherData = await networkHelper.getData();
-    statusCode = networkHelper.statusCode;
     return weatherData;
   }
 
