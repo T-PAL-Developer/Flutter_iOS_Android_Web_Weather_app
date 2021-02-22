@@ -7,6 +7,14 @@ const String apiLanguage = 'en';
 const String units = 'metric';
 
 class WeatherModel {
+  Future<dynamic> getCityWeather(String cityName) async {
+    String url = '$apiURL?q=$cityName&appid=$apiKey&units=metric';
+    NetworkHelper networkHelper = NetworkHelper(url);
+
+    var weatherData = await networkHelper.getData();
+    return weatherData;
+  }
+
   Future<dynamic> getGPSLocationWeather() async {
     Location location = Location();
     await location.getCurrentLocation();
