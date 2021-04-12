@@ -4,7 +4,7 @@ A Flutter application created on the iOS, Android, desktop and web.
 
 ## Description
 
-Weather app, use live weather data in the current location of the device as well as the weather for any city. Application use API OpenWeatherMap. <br>
+Weather app, based on live weather data in the current location of the device as well as the weather for any city. Application use API OpenWeatherMap. <br>
 
 You can find here:
 
